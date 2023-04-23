@@ -5,6 +5,9 @@
         <el-scrollbar ref="scrollContainer" :height="height">
           <el-alert title="ChatGPT" type="success" :closable="false" />
           <el-form label-position="top">
+            <el-form-item label="接口基础地址">
+              <el-input placeholder="请输入接口基础地址" show-password v-model.trim="apiBaseUrl" @blur="changeApiBaseUrl"></el-input>
+            </el-form-item>
             <el-form-item label="Api-Key">
               <el-input placeholder="请输入Api-Key" show-password v-model.trim="apiKey" @blur="changeApiKey"></el-input>
             </el-form-item>
@@ -59,7 +62,7 @@ import zhCnPromptOptions from '@/prompt/zh-cn.json'
 import { ElMessage } from 'element-plus';
 
 const settingStore = useSettingStoreWithOut()
-const { systemInfo, apiKey, modelMap, currentModel, chatList } = storeToRefs(settingStore)
+const { systemInfo, apiKey, apiBaseUrl, modelMap, currentModel, chatList } = storeToRefs(settingStore)
 
 const drawerVisible = ref(true)
 const drawerSize = computed(() => {
@@ -75,6 +78,9 @@ function choosePrompt(val) {
 
 function changeApiKey() {
   settingStore.setApiKey(apiKey.value)
+}
+function changeApiBaseUrl() {
+  settingStore.setApiBaseUrl(apiBaseUrl.value)
 }
 
 function chooseJsonFile() {

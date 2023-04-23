@@ -22,7 +22,7 @@ async function registerCopyHandel(e) {
 
 export function useOpenAi({ openSetting }) {
   const settingStore = useSettingStore()
-  const { openAiInstance, systemInfo, apiKey, currentModel, chatList, isSocket, fetchInstanceMap } = storeToRefs(settingStore)
+  const { openAiInstance, systemInfo, apiKey, apiBaseUrl, currentModel, chatList, isSocket, fetchInstanceMap } = storeToRefs(settingStore)
 
   const pending = ref(false);
   const scrollContainer = ref();
@@ -62,7 +62,7 @@ export function useOpenAi({ openSetting }) {
     const signal = controller.signal;
     fetchInstanceMap.value.push({ key: index, controller })
 
-    fetch(import.meta.env.VITE_API_DOMAIN + '/v1/chat/completions', {
+    fetch(apiBaseUrl.value + '/v1/chat/completions', {
       method: "POST",
       body: JSON.stringify(params),
       headers: { "Content-Type": "application/json", Authorization },
