@@ -16,6 +16,10 @@
                 <el-option v-for="item in modelMap" :label="item.label" :value="item.value"></el-option>
               </el-select>
             </el-form-item>
+
+            <el-form-item label="携带历史消息数量">
+              <el-input type="number" v-model.trim="carriedMessageCount" @blur="changeCarriedMessageCount"></el-input>
+            </el-form-item>
           </el-form>
 
           <el-alert title="Prompt" type="success" :closable="false" />
@@ -62,7 +66,7 @@ import zhCnPromptOptions from '@/prompt/zh-cn.json'
 import { ElMessage } from 'element-plus';
 
 const settingStore = useSettingStoreWithOut()
-const { systemInfo, apiKey, apiBaseUrl, modelMap, currentModel, chatList } = storeToRefs(settingStore)
+const { systemInfo, apiKey, apiBaseUrl, carriedMessageCount, modelMap, currentModel, chatList } = storeToRefs(settingStore)
 
 const drawerVisible = ref(true)
 const drawerSize = computed(() => {
@@ -81,6 +85,9 @@ function changeApiKey() {
 }
 function changeApiBaseUrl() {
   settingStore.setApiBaseUrl(apiBaseUrl.value)
+}
+function changeCarriedMessageCount() {
+  settingStore.setCarriedMessageCount(carriedMessageCount.value)
 }
 
 function chooseJsonFile() {

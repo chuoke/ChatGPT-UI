@@ -5,6 +5,7 @@ import { Configuration, OpenAIApi } from "openai";
 
 const ApiKey = "__chapt-GPT-Api-key__";
 const ApiBaseUrlKey = "__chapt-GPT-Api-Base-Url-key__";
+const CarriedMessageCountKey = "__chapt-GPT-Carried-Message-Count__";
 const Storage = createStorage({ storage: localStorage });
 
 export const useSettingStore = defineStore("setting", {
@@ -16,7 +17,7 @@ export const useSettingStore = defineStore("setting", {
     apiKey: Storage.get(ApiKey) || import.meta.env.VITE_API_KEY || "",
     apiBaseUrl:
       Storage.get(ApiBaseUrlKey) || import.meta.env.VITE_API_BASE_URL || "",
-
+    carriedMessageCount: Storage.get(CarriedMessageCountKey) || 4,
     modelMap: [
       { label: "gpt-3.5-turbo", value: "gpt-3.5-turbo" },
       { label: "gpt-3.5-turbo-0301", value: "gpt-3.5-turbo-0301" },
@@ -41,6 +42,11 @@ export const useSettingStore = defineStore("setting", {
     setApiKey(key = "") {
       if (key === Storage.get(ApiKey) || key.length < 1) return;
       Storage.set(ApiKey, key);
+      this.initChatAi();
+    },
+    setCarriedMessageCount(num) {
+      if (0 > num) return;
+      Storage.set(CarriedMessageCountKey, num);
       this.initChatAi();
     },
     initChatAi() {

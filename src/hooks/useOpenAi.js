@@ -22,7 +22,7 @@ async function registerCopyHandel(e) {
 
 export function useOpenAi({ openSetting }) {
   const settingStore = useSettingStore()
-  const { openAiInstance, systemInfo, apiKey, apiBaseUrl, currentModel, chatList, isSocket, fetchInstanceMap } = storeToRefs(settingStore)
+  const { openAiInstance, systemInfo, apiKey, apiBaseUrl, carriedMessageCount, currentModel, chatList, isSocket, fetchInstanceMap } = storeToRefs(settingStore)
 
   const pending = ref(false);
   const scrollContainer = ref();
@@ -40,8 +40,7 @@ export function useOpenAi({ openSetting }) {
   }
 
   function buildParams() {
-    // 保留8组对话 避免tokens消耗过大,如需加大保留对话组，可更改下面 -17的值，当前计算方式为 -(8 * 2 + 1)
-    const messages = chatList.value.slice(-17)
+    const messages = chatList.value.slice(-carriedMessageCount)
     return {
       model: currentModel.value,
       messages: [systemInfo.value, ...messages],
