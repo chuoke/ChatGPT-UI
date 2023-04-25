@@ -17,7 +17,7 @@ export const useSettingStore = defineStore("setting", {
     apiKey: Storage.get(ApiKey) || import.meta.env.VITE_API_KEY || "",
     apiBaseUrl:
       Storage.get(ApiBaseUrlKey) || import.meta.env.VITE_API_BASE_URL || "",
-    carriedMessageCount: Storage.get(CarriedMessageCountKey) || 4,
+    carriedMessageCount: Storage.get(CarriedMessageCountKey) || import.meta.env.VITE_CARRIED_MESSAGE_COUNT,
     modelMap: [
       { label: "gpt-3.5-turbo", value: "gpt-3.5-turbo" },
       { label: "gpt-3.5-turbo-0301", value: "gpt-3.5-turbo-0301" },

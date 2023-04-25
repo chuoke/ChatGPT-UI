@@ -40,7 +40,7 @@ export function useOpenAi({ openSetting }) {
   }
 
   function buildParams() {
-    const messages = chatList.value.slice(-carriedMessageCount)
+    const messages = chatList.value.slice(-carriedMessageCount.value)
     return {
       model: currentModel.value,
       messages: [systemInfo.value, ...messages],
